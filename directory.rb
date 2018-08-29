@@ -18,14 +18,14 @@ end
 
 def print(students)
  students.select do |student|
-     if student[:name].size < 12
+     if student[:name][0] == "a"
           puts "#{student[:name]} (#{student[:cohort]} cohort)" 
       end
   end
 end
 
 def print_footer(students)
-  puts "Overall, we have #{students.count} great students, but only displaying those whose names are less than 12 characters"
+  puts "Overall, we have #{students.count} great students, but only displaying those whose names begins with a "
 end
 
 # Nothing happens until we call the methods
