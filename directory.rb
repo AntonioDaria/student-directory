@@ -1,4 +1,3 @@
-
 def input_students
   puts "Please enter the name of the students"
   puts "To finish, just hit return twice"
@@ -18,11 +17,11 @@ def print_header
 end
 
 def print(students)
-  students.each do |student|
-    puts "#{student[:name]} (#{student[:cohort]} cohort)"
+  students.each_with_index do |student, index|
+      puts "#{index+1}.#{student[:name]} (#{student[:cohort]} cohort)"
   end
 end
-
+  
 def print_footer(students)
   puts "Overall, we have #{students.count} great students"
 end
