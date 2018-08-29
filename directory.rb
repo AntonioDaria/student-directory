@@ -17,13 +17,15 @@ def print_header
 end
 
 def print(students)
-  students.each_with_index do |student, index|
-      puts "#{index+1}.#{student[:name]} (#{student[:cohort]} cohort)"
+ students.select do |student|
+     if student[:name].size < 12
+          puts "#{student[:name]} (#{student[:cohort]} cohort)" 
+      end
   end
 end
-  
+
 def print_footer(students)
-  puts "Overall, we have #{students.count} great students"
+  puts "Overall, we have #{students.count} great students, but only displaying those whose names are less than 12 characters"
 end
 
 # Nothing happens until we call the methods
@@ -31,3 +33,6 @@ students = input_students
 print_header
 print(students)
 print_footer(students)
+
+
+
