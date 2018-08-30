@@ -50,6 +50,21 @@ def print_by_cohort(students)
   end
 end
 
+def default_cohort(students)
+  cohort = "april"
+  students.map do |student|
+      if student[:cohort].empty? 
+          puts "#{student[:name]} (#{cohort}) (#{student[:country_of_birth]}) (#{student[:hobby]})".center(55)
+      end
+  end
+end
+
+def empty_list_message(students)
+  if students.empty?
+      puts "no values inserted".center(50)
+  end
+end
+
 def print_footer(students)
   puts "-------------".center(50)
   if students.count < 2
@@ -62,5 +77,8 @@ end
 students = input_students
 #nothing happens until we call the methods
 print_header
+empty_list_message(students)
+default_cohort(students)
 print_by_cohort(students)
 print_footer(students)
+  
