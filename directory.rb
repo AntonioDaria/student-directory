@@ -1,30 +1,4 @@
 @students = []
-def input_students
-  puts "Please enter the names of the students"
-  puts "To finish, just hit return 4 times"
-  name = gets.strip
-  puts "Please enter the country of birth of the students"
-  puts "To finish, just hit return 4 times"
-  cob = gets.strip
-  puts "Please enter the hobby of the students"
-  puts "To finish, just hit return 4 times"
-  hobby = gets.strip
-  puts "Please enter the cohort of the students"
-  puts "To finish, just hit return 4 times"
-  cohort = gets.strip
-  students = []
-  # while the name is not empty, repeat this code
-  while !name.empty? do
-    # add the student hash to the array
-    @students << { name: name, country_of_birth: cob, hobby: hobby, cohort: cohort }
-    puts "Now we have #{@students.count} students"
-    # get another name from the user
-    name = gets.strip
-    cob = gets.strip
-    hobby = gets.strip
-    cohort = gets.strip
-  end
-end
 
 def print_menu
   # 1. print the menu and ask the user what to do
@@ -35,33 +9,11 @@ def print_menu
   puts "9 Exit"
 end
 
-def show_students
-  print_header
-  empty_list_message
-  default_cohort
-  print_by_cohort
-  print_footer
-end
-
-def load_students
-  file = File.open("students.csv", "r")
-  file.readlines.each do |line|
-  name, country_of_birth, hobby, cohort = line.chomp.split(',')
-    @students << {name: name, country_of_birth: country_of_birth, hobby: hobby, cohort: cohort}
+def interactive_menu
+  loop do
+    print_menu
+    process(STDIN.gets.chomp)
   end
-  file.close
-end
-
-def save_students
-  # open the file for writing
-  file = File.open("students.csv", "w")
-  # iterate over the array of students
-  @students.each do |student|
-    student_data = [student[:name], student[:country_of_birth], student[:hobby], student[:cohort]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
-  end
-  file.close
 end
 
 def process(selection)
@@ -81,11 +33,39 @@ def process(selection)
   end 
 end
 
-def interactive_menu
-  loop do
-    print_menu
-    process(gets.chomp)
+def input_students
+  puts "Please enter the names of the students"
+  puts "To finish, just hit return 4 times"
+  name = STDIN.gets.strip
+  puts "Please enter the country of birth of the students"
+  puts "To finish, just hit return 4 times"
+  cob = STDIN.gets.strip
+  puts "Please enter the hobby of the students"
+  puts "To finish, just hit return 4 times"
+  hobby = STDIN.gets.strip
+  puts "Please enter the cohort of the students"
+  puts "To finish, just hit return 4 times"
+  cohort = STDIN.gets.strip
+  students = []
+  # while the name is not empty, repeat this code
+  while !name.empty? do
+    # add the student hash to the array
+    @students << { name: name, country_of_birth: cob, hobby: hobby, cohort: cohort }
+    puts "Now we have #{@students.count} students"
+    # get another name from the user
+    name = STDIN.gets.strip
+    cob = STDIN.gets.strip
+    hobby = STDIN.gets.strip
+    cohort = STDIN.gets.strip
   end
+end
+
+def show_students
+  print_header
+  empty_list_message
+  default_cohort
+  print_by_cohort
+  print_footer
 end
 
 def print_header
@@ -135,5 +115,40 @@ def print_footer
   end
 end
 
+def save_students
+  # open the file for writing
+  file = File.open("students.csv", "w")
+  # iterate over the array of students
+  @students.each do |student|
+    student_data = [student[:name], student[:country_of_birth], student[:hobby], student[:cohort]]
+    csv_line = student_data.join(",")
+    file.puts csv_line
+  end
+  file.close
+end
+
+
+def load_students (filename = "students.csv")
+  file = File.open(filename, "r")
+  file.readlines.each do |line|
+  name, country_of_birth, hobby, cohort = line.chomp.split(',')
+    @students << {name: name, country_of_birth: country_of_birth, hobby: hobby, cohort: cohort}
+  end
+  file.close
+end
+
+def try_load_students
+  filename = ARGV.first
+  return if filename.nil?
+  if File.exists?(filename)
+    load_students(filename)
+    puts "Loaded #{@students.count} from #{filename}"
+  else
+    puts "Sorry, #{filename} doesn't exist."
+    exit
+  end
+end
+
+try_load_students
 interactive_menu
   
