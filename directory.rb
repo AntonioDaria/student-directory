@@ -1,16 +1,16 @@
 def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return 4 times"
-  name = gets.chomp
+  name = gets.strip
   puts "Please enter the country of birth of the students"
   puts "To finish, just hit return 4 times"
-  cob = gets.chomp
+  cob = gets.strip
   puts "Please enter the hobby of the students"
   puts "To finish, just hit return 4 times"
-  hobby = gets.chomp
+  hobby = gets.strip
   puts "Please enter the cohort of the students"
   puts "To finish, just hit return 4 times"
-  cohort = gets.chomp
+  cohort = gets.strip
   students = []
   # while the name is not empty, repeat this code
   while !name.empty? do
@@ -18,10 +18,10 @@ def input_students
     students << { name: name, country_of_birth: cob, hobby: hobby, cohort: cohort }
     puts "Now we have #{students.count} students"
     # get another name from the user
-    name = gets.chomp
-    cob = gets.chomp
-    hobby = gets.chomp
-    cohort = gets.chomp
+    name = gets.strip
+    cob = gets.strip
+    hobby = gets.strip
+    cohort = gets.strip
   end
   # return the array of students
   students
@@ -33,8 +33,20 @@ def print_header
 end
 
 def print(students)
-  students.each do |i|
-      puts "#{i[:name]} (#{i[:cohort]}) (#{i[:country_of_birth]}) (#{i[:hobby]})".center(55)
+  count = 1
+  while count <= 1 do
+      for i in students do
+          puts "#{i[:name]} (#{i[:cohort]} cohort) (#{i[:country_of_birth]}) (#{i[:hobby]})".center(55)
+      end
+      count += 1
+  end
+end
+
+def print_by_cohort(students)
+  students.map do | student |
+    if student[:cohort] == "april"
+        puts "#{student[:name]} (#{student[:cohort]}) (#{student[:country_of_birth]}) (#{student[:hobby]})".center(55)
+    end
   end
 end
 
@@ -50,5 +62,5 @@ end
 students = input_students
 #nothing happens until we call the methods
 print_header
-print(students)
+print_by_cohort(students)
 print_footer(students)
