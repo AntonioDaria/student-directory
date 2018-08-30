@@ -30,7 +30,8 @@ def print_menu
   # 1. print the menu and ask the user what to do
   puts "1. Input the students"
   puts "2. Show the students"
-  puts "3. Save the list of students"
+  puts "3. Save the list of students.csv"
+  puts "4. Load the list from students.csv"
   puts "9 Exit"
 end
 
@@ -40,6 +41,15 @@ def show_students
   default_cohort
   print_by_cohort
   print_footer
+end
+
+def load_students
+  file = File.open("students.csv", "r")
+  file.readlines.each do |line|
+  name, country_of_birth, hobby, cohort = line.chomp.split(',')
+    @students << {name: name, country_of_birth: country_of_birth, hobby: hobby, cohort: cohort}
+  end
+  file.close
 end
 
 def save_students
@@ -62,6 +72,8 @@ def process(selection)
       show_students
     when "3"
       save_students
+    when "4"
+      load_students
     when "9"
       exit 
     else
