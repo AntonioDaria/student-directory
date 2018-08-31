@@ -128,7 +128,7 @@ end
 
 def save_students
   # open the file for writing
-  file = File.open("students.csv", "w")
+   File.open("students.csv", "w") do |file|
   # iterate over the array of students
   @students.each do |student|
     student_data = [student[:name], student[:country_of_birth], student[:hobby], student[:cohort]]
@@ -136,7 +136,11 @@ def save_students
     file.puts csv_line
   end
   puts "Students saved successfully!!! please choose from the menu options to display"
-  file.close
+end#file.close
+end
+
+File.open('foo', 'w') do |f|
+  f.write "bar"
 end
 
 def load_students (filename = "students.csv")
