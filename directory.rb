@@ -6,7 +6,7 @@ def print_menu
   puts "2. Show all the students"
   puts "3. Save the list of students.csv"
   puts "4. Load the list from students.csv"
-  puts "5.Show students from April cohort"
+  puts "5. Show students from April cohort"
   puts "9 Exit"
 end
 
@@ -73,6 +73,8 @@ end
 
 def april_cohort
   print_header
+  empty_list_message
+  default_cohort
   print_by_cohort
   print_footer
 end
@@ -133,6 +135,7 @@ def save_students
     csv_line = student_data.join(",")
     file.puts csv_line
   end
+  puts "Students saved successfully!!! please choose from the menu options to display"
   file.close
 end
 
