@@ -5,7 +5,7 @@ def print_menu
   puts "1. Input the students"
   puts "2. Show all the students"
   puts "3. Save the list of students.csv"
-  puts "4. Load the list from students.csv"
+  puts "4. Load the list from a file of your choice"
   puts "5. Show students from April cohort"
   puts "9 Exit"
 end
@@ -140,13 +140,19 @@ def save_students
 end
 
 def load_students (filename = "students.csv")
-  file = File.open(filename, "r")
-  file.readlines.each do |line|
-  name, country_of_birth, hobby, cohort = line.chomp.split(',')
+  puts "Insert the file name"
+  @user = gets.chomp
+  if @user != filename 
+    puts "filename not recognised"
+  else
+    file = File.open(filename, "r")
+    file.readlines.each do |line|
+    name, country_of_birth, hobby, cohort = line.chomp.split(',')
     @students << {name: name, country_of_birth: country_of_birth, hobby: hobby, cohort: cohort}
   end
   puts "Students loaded successfully!!! please choose from the menu options to display"
   file.close
+end
 end
 
 def try_load_students
