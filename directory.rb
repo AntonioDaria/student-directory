@@ -3,9 +3,10 @@
 def print_menu
   # 1. print the menu and ask the user what to do
   puts "1. Input the students"
-  puts "2. Show the students"
+  puts "2. Show all the students"
   puts "3. Save the list of students.csv"
   puts "4. Load the list from students.csv"
+  puts "5.Show students from April cohort"
   puts "9 Exit"
 end
 
@@ -26,6 +27,8 @@ def process(selection)
       save_students
     when "4"
       load_students
+    when "5"
+      april_cohort
     when "9"
       exit 
     else
@@ -64,6 +67,12 @@ def show_students
   print_header
   empty_list_message
   default_cohort
+  print
+  print_footer
+end
+
+def april_cohort
+  print_header
   print_by_cohort
   print_footer
 end
@@ -76,7 +85,7 @@ end
 def print
   count = 1
   while count <= 1 do
-      for i in students do
+      for i in @students do
           puts "#{i[:name]} (#{i[:cohort]} cohort) (#{i[:country_of_birth]}) (#{i[:hobby]})".center(55)
       end
       count += 1
@@ -102,7 +111,7 @@ end
 
 def empty_list_message
   if @students.empty?
-      puts "no values inserted".center(50)
+      puts "Insert new students or choose from menu options to load existing ones".center(50)
   end
 end
 
@@ -127,13 +136,13 @@ def save_students
   file.close
 end
 
-
 def load_students (filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
   name, country_of_birth, hobby, cohort = line.chomp.split(',')
     @students << {name: name, country_of_birth: country_of_birth, hobby: hobby, cohort: cohort}
   end
+  puts "Students loaded successfully!!! please choose from the menu options to display"
   file.close
 end
 
