@@ -1,4 +1,5 @@
 @students = []
+require 'csv'
 
 def print_menu
   # 1. print the menu and ask the user what to do
@@ -127,16 +128,14 @@ def print_footer
 end
 
 def save_students
-  # open the file for writing
-   File.open("students.csv", "w") do |file|
-  # iterate over the array of students
-  @students.each do |student|
-    student_data = [student[:name], student[:country_of_birth], student[:hobby], student[:cohort]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
+  CSV.open("students.csv", "w") do |file| # open the file for writing
+    @students.each do |student| # iterate over the array of students
+    file << [student[:name], student[:country_of_birth], student[:hobby], student[:cohort]]
+    #csv_line = student_data.join(",")
+    #file.puts csv_line
   end
   puts "Students saved successfully!!! please choose from the menu options to display"
-end#file.close
+ end  #file.close
 end
 
 def load_students (filename = "students.csv")
