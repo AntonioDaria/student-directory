@@ -139,26 +139,32 @@ def save_students
 end#file.close
 end
 
-File.open('foo', 'w') do |f|
-  f.write "bar"
-end
-
 def load_students (filename = "students.csv")
   puts "Insert the file name"
   @user = gets.chomp
-  if @user != filename 
-    puts "filename not recognised"
+  if @user != filename
+    default_loading
   else
+    file = File.open(filename, "r")
+    file.readlines.each do |line|
+      name, country_of_birth, hobby, cohort = line.chomp.split(',')
+      @students << {name: name, country_of_birth: country_of_birth, hobby: hobby, cohort: cohort}
+    end
+    puts "Students loaded successfully!!! please choose from the menu options to display"
+    file.close
+  end
+end
+
+def default_loading(filename = "students.csv")
     file = File.open(filename, "r")
     file.readlines.each do |line|
     name, country_of_birth, hobby, cohort = line.chomp.split(',')
     @students << {name: name, country_of_birth: country_of_birth, hobby: hobby, cohort: cohort}
   end
-  puts "Students loaded successfully!!! please choose from the menu options to display"
-  file.close
-end
+  puts "!!!Attention!!! File name not recognised, data loaded from default file students.csv"
 end
 
+=begin
 def try_load_students
   filename = ARGV.first
   return if filename.nil?
@@ -172,5 +178,6 @@ def try_load_students
 end
 
 try_load_students
+=end
 interactive_menu
   
